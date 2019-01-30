@@ -1,0 +1,200 @@
+Configurações de ambiente
+
+1 Curso de react
+
+
+		1.1clone do repositorio : https://github.com/cod3rcursos/curso-react-redux
+		
+		1.2 - mongodb, deve se criar uma variavel de ambiente com o caminho do bin do mesmo
+		1.3- para ativar o mongo no windows use o comando mongod no powershell
+		1.4- necessita desse arquivo para ativar o mongodb no windows C:\Data\db 
+		1.5- para saber a versao do node.js instalado, usar o comando (node -v)
+
+		
+2 - baixar as dependencias : npm i
+
+3- para subir a aplicação backend npm run production
+====================================
+
+Aula 7 Visal geral e instalação
+
+4 -  comando para criar o package.json : npm init -y
+
+4.1 instalando as dependencias para o curso do webpack e do webpackdevServer
+
+	npm i --save-dev webpack@1.14.0  webpack-dev-server@1.16.2
+	
+====================================
+
+aula 11 - como webpack pode carregar mais de um arquivo através do sistema de módulos
+common js = modularização usada pelo node.js 
+
+
+======================================
+aula 12 - Importancia da referencia
+	Com o webpack.config.js ja criado, para se criar o bundle.js no diretorio de saída, usa-se o
+	comando: ./node_modules/.bin/webpack
+========================================
+aula 13 -
+o require('./') = é o padrao usado pelo node.js para referenciar
+o import from './' é o  sistema de módulos do ecma script 2015 para referenciar, porém o navegador
+não sabe interpretar essa referencia, para isso usa-se o transpile usando o Babel
+
+
+	para que possa usar o Babel, deve-se adicionar algumas referencias no webpack.config.js
+	
+	module:{//usando esses loaders para efetuar uma tradução, pois sem ele o (import from) do ecma script não funciona
+        loaders:[{
+            test: /.js?$/,//pegando qualquer arquivo .js
+            loader:'babel-loader',
+            exclude: /node_modules/, //definindo que ele não precisa ler o conteudo que esta no diretorio node_modules, somente os outros da aplicação
+            query:{//o que ele vai interpretar 
+                presets:['es2015']
+            }
+        }]
+    }
+
+e depois adicionar as dependencias do Babel
+	npm i --save-dev babel-core@6.22.1 babel-loader@6.2.10 babel-preset-es2015@6.22.0 
+	npm i --save-dev babel-preset-es2015@6.22.0
+=========================================
+
+alua 15- Clonar objetos usando o operador Spread { ...objeto}
+
+dentro do wwbepack.config.js 
+deve-se adicionar um novo plugin, dentro de querys
+
+query:{//o que ele vai interpretar 
+                presets:['es2015'],
+                plugins: ["transform-object-rest-spread"] //esse plugin é usado para obter o operador Spread ( ... ) usado para clonar objetos
+            }
+			
+e depois adicionar as dependencias com :
+
+npm i --save-dev babel-plugin-transform-object-rest-spread@6.22.0
+
+==========================================
+
+Adicionando o Preset do React , para configurar o webpak especifico do react
+
+npm i --save-dev react@15.4.2
+
+
+A principio o navegador , não entende esse formato que o react usa:
+import 'react'//ele funciona direto o import por causa que adicionamos o Babel
+
+export default props => (
+    <h1>Olá</h1> //Misturar html com outras coisas
+)
+
+console.log('funcionou!!!')
+
+
+Para corrigir isso, deve-se adicionar um preset do react no webpack.config 
+
+
+query:{//o que ele vai interpretar 
+		presets:['es2015','react'],
+		plugins: ["transform-object-rest-spread"] //esse plugin é usado para obter o operador Spread ( ... ) usado para clonar objetos
+}
+
+e adicionar uma dependencia
+npm i --save-dev babel-preset-react@6.22
+===========================================================
+
+aula 17 - Adicionando Loader para CSS
+
+a principio, todos os arquivos que ele faz referencia, como esta configurando no loader do webpack 
+module:{//usando esses loaders para efetuar uma tradução, pois sem ele o (import from) do ecma script não funciona
+        loaders:[{
+            test: /.js?$/,//pegando qualquer arquivo .js
+			
+Dessa forma para poder adicionar um outro arquivo de uma fonte .css por exemplo, deve-se alterar o webpack e incluindo outros
+loaders
+
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+plugins:[
+        new ExtractTextPlugin('app.css')
+    ],
+	module:{//usando esses loaders para efetuar uma tradução, pois sem ele o (import from) do ecma script não funciona
+        loaders:[{
+            test: /.js?$/,//pegando qualquer arquivo .js
+            loader:'babel-loader',
+            exclude: /node_modules/, //definindo que ele não precisa ler o conteudo que esta no diretorio node_modules, somente os outros da aplicação
+            query:{//o que ele vai interpretar 
+                presets:['es2015','react'],
+                plugins: ["transform-object-rest-spread"] //esse plugin é usado para obter o operador Spread ( ... ) usado para clonar objetos
+            }
+        },{
+            test: /\.css?$/,//poder carregar arquivos com extensão .css
+            loader:ExtractTextPlugin.extract("style-loader","css-loader")
+        }
+    ]
+
+	e instalar as dependencia
+	
+	npm i --save-dev extract-text-webpack-plugin@1.0.1  style-loader@0.13.1 css-loader@0.26.1
+	npm i --save-dev style-loader@0.13.1
+	npm i --save-dev css-loader@0.26.1
+========================================================
+Próxima Aula 18 - Entrando no React
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

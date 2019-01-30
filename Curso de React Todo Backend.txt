@@ -1,0 +1,89 @@
+--TodoBackend
+Repositório Pronto
+
+
+https://github.com/cod3rcursos/curso-react-redux
+
+
+package.json
+
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/loader.js",
+  
+  "scripts": {//dois launchers inicializar a aplicação
+    "dev": "nodemon", //npm run dev
+    "production": "pm2 start src/loader.js --name todo-app" //npm run production = pm2
+  },
+  
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.0",
+    "node-restful": "^0.2.5",
+    "nodemon": "^1.11.0",
+    "pm2": "^2.1.5"
+  }
+}
+=================
+Configurando o servidor com express
+src/config/server.js
+//start o servidor e aloca uma porta
+const port =3003
+
+const bodyParser = require('body-parser')//Parser do corpo da requisição, sumbit, json
+const express = require('express')//servidor que roda em cima do node.js
+const server = express()//baseado em um padrao chain of responsability
+
+server.use(bodyParser.urlencoded({extended: true }))//middleware para requisições submit
+server.use(bodyParser.json())//para requisições com corpo serializados em json
+server.listen(port, function(){
+    console.log(`BACKEND is running on port ${port}`)
+})
+====================
+ODM e Criação da API Rest
+src/api/todo/todo.js
+
+//mapeamento do objeto para documento do mongo
+
+const restful = require('node-restful')
+const mongoose = restful.mongose //para trabalhar em cima de api´s restfull
+
+//ODM = ORM mapeamento de objeto relacional, mapeamento de documento mongo
+//Dessa que é o dominio do mongodb
+const todoSchema = new mongoose.Schema({
+    description :{type: String , required:true},
+    done: {type:Boolean, required:true, default:false },
+    createAt : {type:Date , default:Date.now}
+})
+
+
+module.exports = restful.model('Todo',todoSchema)
+
+------
+src/api/todo/todoService.js
+//Estou configurando os tipos de requisições
+const Todo = require('./todo')
+
+
+Todo.methods(['get','post','put','delete'])
+
+//em operações de atualização, na resposta do mongodb, ele retorne ja o registro atualizado
+//nodeRestfull por padrao nao valida as atualizações, deve-se forçar essas validações runValidators: true
+Todo.updateOptions({new: true, runValidators: true})
+
+module.exports = Todo
+=================================
+
+Proxima Aula 38 Mapeamento de rotas
+
+
+
+
+
+

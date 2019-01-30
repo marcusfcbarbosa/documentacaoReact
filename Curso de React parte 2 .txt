@@ -1,0 +1,182 @@
+1- Primeira Contato com React
+
+	npm init -y // para efetuar do download do package.json
+	
+	
+	npm i --save-dev react@15.4.2 
+	npm i --save-dev react-dom@15.4.2               //usado para renderizar e vincular ao contexto da div da pagina de entrada  
+	npm i --save-dev babel-core@6.22.1   			//são usado para poder usar o import from do ecmascript  
+	npm i --save-dev babel-loader@6.2.10 			//são usado para poder usar o import from do ecmascript
+	npm i --save-dev babel-preset-es2015@6.22.0		//são usado para poder usar o import from do ecmascript		
+	npm i --save-dev babel-preset-react@6.22.0      //são usado para poder usar o import from do ecmascript USANDO O REACT
+	npm i --save-dev webpack@1.14.0
+	npm i --save-dev webpack-dev-server@1.16.2
+	
+	
+	Obs: webpack roda em cima do node.json
+	==========================================
+	package.json
+	{
+  "name": "exercicios_react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+      "dev":"webpack-dev-server --progress --collors --inline --hot"//para poder rodar o comando npm run dev
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusfcbarbosa/exercicios_react.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcusfcbarbosa/exercicios_react/issues"
+  },
+  "homepage": "https://github.com/marcusfcbarbosa/exercicios_react#readme",
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
+==================================
+Parametros de uma div props 
+
+
+import React from 'react'
+
+export default  (props) =>  (
+    <h1>Primeiro Componente</h1>
+)
+===================================
+
+Componentes Filhos trabalhando com conceito de herança
+
+import React from 'react'
+
+//usando o spread para clonar o objeto
+//usando dessa forma {React.cloneElement(props.children, { ...props})}  
+//Só funciona para um unico elemento, mas não para varios elementos
+export default props => (
+    <div>
+        <h1>Familia</h1>
+            {React.cloneElement(props.children, { ...props})}  
+    </div>
+)
+
+========================================
+
+Dessa Forma:
+
+export default props => (
+    <div>
+        <h1>Familia</h1>
+            {React.Children.map(
+                props.children,
+                child => React.cloneElement(child,{...props})
+            )}
+    </div>
+)
+
+eu posso fazer com que os filhoS herdem caracteristicas do pai
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Family from './family'
+import Member from './member'
+
+//passando a propriedade LastName para as filhas dentro de Family
+ReactDOM.render(
+    
+    <Family lastName='Silva'>
+        <Member name='Guilherme'  />
+        <Member name='Rafael'  />
+        <Member name='Julia'  />
+    </Family>
+, document.getElementById('app'))
+
+========================================
+
+Componente por Classe padrao
+
+import React , { Component } from 'react'
+
+//componentes por classe
+export default class ClassComponent extends Component {
+    render(){
+        return (
+            <h1>{ this.props.value} </h1>
+        )
+    }
+}
+========================================
+
+this.props do componente é somente para leitura, não se poder alterá-la
+
+
+Um dos principios do React e da linguagem funcional é de que o dado não é alterado, ele é evoluido.
+
+
+Chamada basica e atribuindo um evento de clique, para evolyuir seu estado
+import React , { Component } from 'react'
+
+//componentes por classe com estado
+export default class ClassComponent extends Component {
+    constructor(props){
+        super(props)
+        this.state = { value: props.initialValue } //inicializando o estado do componente
+    }    
+
+    sum(delta){
+        this.setState({  value: this.state.value + delta })//evoluindo o estado
+    }
+
+    render(){
+     //this.props.value++ //isso nao vai funcionar pois othis.props é somente leitura
+        return (
+            <div>
+                <h1>   { this.props.label }</h1>
+                <h1>   { this.state.value }</h1>
+                <button onClick={()=>this.sum(-1)}>Dec </button>
+                <button onClick={()=>this.sum(1)}>Inc </button>
+            </div>
+        )
+    }
+}
+=========================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
