@@ -1,0 +1,40 @@
+Curso de React Todo Frontend 
+
+axios = essa lib cuida das promisses, ou seja, das requisições assincronas
+============
+Configurando as Rotas
+
+import React from 'react'
+import {Router , Route, Redirect, hashHistory } from 'react-router'
+
+import Todo from '../todo/todo'
+import About from '../about/about'
+
+//Componente baseado em funcao
+export default props =>(
+    <Router history={hashHistory}>
+
+        <Route path="/todos" component={Todo}/>			||Redireciona para os Componentes que foram importados
+        <Route path="/about" component={About}/>        ||Redireciona para os Componentes que foram importados
+
+        <Redirect from="*" to="/todos"/>				|| EM CASO DE ROTA INEXISTENTE REDIRECIONA PARA /todos
+    </Router>
+)
+
+e no arquivo de entrada definido no webpack.config.js , se adiciona o arquivo de rotas
+
+import 'modules/bootstrap/dist/css/bootstrap.min.css'
+import 'modules/font-awesome/css/font-awesome.min.css'
+import React from 'react'
+import Menu from '../template/menu'
+import Routes from './routes'
+
+//Componente baseado em função
+export default props =>(
+    <div className="container">
+        <Menu/>
+        <Routes/>
+    </div>
+)
+==========================================
+Aula 51-- Entendendo a estratégia de implementação
