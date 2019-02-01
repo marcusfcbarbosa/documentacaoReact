@@ -74,7 +74,8 @@ export default props => (
 ========================================
 
 Dessa Forma:
-
+family.jsx
+Componente por função
 export default props => (
     <div>
         <h1>Familia</h1>
@@ -94,7 +95,6 @@ import Member from './member'
 
 //passando a propriedade LastName para as filhas dentro de Family
 ReactDOM.render(
-    
     <Family lastName='Silva'>
         <Member name='Guilherme'  />
         <Member name='Rafael'  />
@@ -151,9 +151,7 @@ export default class ClassComponent extends Component {
     }
 }
 =========================================
-
-
-
+Evento Adicionar Aula 55
 
 
 

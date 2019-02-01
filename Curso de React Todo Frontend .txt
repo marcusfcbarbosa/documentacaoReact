@@ -37,4 +37,4 @@ export default props =>(
     </div>
 )
 ==========================================
-Aula 51-- Entendendo a estratégia de implementação
+Quando se trabalha simplesmente com React, o estado da aplicação fica em seu componente
