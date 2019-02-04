@@ -151,30 +151,75 @@ export default class ClassComponent extends Component {
     }
 }
 =========================================
-Evento Adicionar Aula 55
+Evento de clique de um  botao no TodoForm, que chama uma função cuja implementação esta em Todo.jsx
+
+TodoForm.jsx
+
+import React  from 'react'
+import Grid from '../template/grid'
+import IconButton from '../template/iconButton'
 
 
+export default props =>(
+    <div role="form" className="todoForm">
+        <Grid cols='12 9 10'>
+            <input id="description" className="form-control"
+                placeholder="Adicione uma tarefa">
+            </input>   
+        </Grid>
+        <Grid cols='12 3 2'>
+            <IconButton style='primary' icon='plus'
+                onClick={props.handleAdd}
+            >
+            </IconButton>
+        </Grid>
+    </div>
+)
+
+------------
+Todo.jsx
+
+import React , {Component} from 'react'
+import PageHeader from '../template/pageHeader'
+import TodoForm from './todoForm'
+import TodoList from './todoList'
+
+//Componente por classe
+export default class Todo extends Component{
+
+    handleAdd(){
+        console.log(this); //this representa a classe Todo, a principio ele esta null, porém em React ele repreenta quem chamou a função
+    }
+    render(){
+        return(
+            <div>
+                <PageHeader name="Tarefas" small="Cadastro"></PageHeader>
+                <TodoForm handleAdd ={this.handleAdd}/>
+                <TodoList />
+            </div>
+        )
+    }
+}
+------
+export default class Todo extends Component{
+
+    constructor(props){
+        super(props)
+            this.handleAdd = this.handleAdd.bind(this)//Dessa forma o this, irá esta vinculado ao contexto de quem o chama
+    }
+    
+    //a principio o this esta null
+    handleAdd(){
+        console.log(this);
+    }
+
+https://www.udemy.com/react-redux-pt/learn/v4/t/lecture/6513198?start=0
+==========================
+lib axios, para trabalhar com requisições HTTP
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //esse método faz uma requisição e altera os parametros que estao dentro do estado do componente
+    refresh(){
+        axios.get(`${URL}?sort=-createdAt`)
+            .then((resp)=> this.setState({...this.state, description:'', list: resp.data}))
+    }
