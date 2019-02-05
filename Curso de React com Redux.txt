@@ -3,3 +3,23 @@ React+ Redux
 Aula 64
 
 npm i --save-dev react-redux@5.0.2 redux@3.6.0
+
+Link de consulta para redux + react
+https://css-tricks.com/learning-react-redux/
+
+reducers- são métodos dentro do store que alteram o estado dos componentes que estão escritos no mesmo
+
+Redux is flux-like (dividido em 3 partes)
+	1- single source of truth = no caso o estado da sua aplicação
+	2- State is Read Only = estado do componente é somente leitura
+	3- Changes are made whit Pure Functions = funções puras, são funções que nao geram efeitos colaterais
+
+estado é sempre um objeto
+
+import { combineReducers, createStore } from 'redux'
+
+createStore//usado para criar o estado unico da aplicação
+combineReducers//cada atributo do  createStore é controlado pelo combineReducers
+
+import { Provider } from 'react-redux'
+Provider//Ele pega seu estado e leva para os componentes internos

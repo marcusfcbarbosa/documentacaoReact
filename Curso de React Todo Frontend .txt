@@ -38,3 +38,5 @@ export default props =>(
 )
 ==========================================
 Quando se trabalha simplesmente com React, o estado da aplicação fica em seu componente
+
+https://www.udemy.com/react-redux-pt/learn/v4/t/lecture/6513188?start=0
