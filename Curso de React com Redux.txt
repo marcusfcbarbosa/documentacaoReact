@@ -23,3 +23,36 @@ combineReducers//cada atributo do  createStore é controlado pelo combineReducer
 
 import { Provider } from 'react-redux'
 Provider//Ele pega seu estado e leva para os componentes internos
+==================
+
+Após aplicar o redux dentro do componente
+
+import { connect } from 'react-redux'//conecta esse componente com a Store e com as Actions
+
+===================
+Instalando o Redux Dev Tools 
+
+um plugin do Chrome que possibilita fazer o debug no reducer
+
+
+
+===========
+Aula 78 => Obs: Voltar a aula 77, aplicação esta quebrando
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
