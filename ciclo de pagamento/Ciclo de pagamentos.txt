@@ -14,13 +14,21 @@ npm i --save mongoose@4.7.0
 body-parser, middleware que vai auxiliar na interpretação de requisições urlencoded, que vem através de uma requisição de um formulario, ex: submit
 npm i --save body-parser@1.15.2
 
-npm i --save loadash@4.17.4
+npm i --save lodash@4.17.4
 
 mongoose-paginate, para paginação das consultas e express-query-int para resolver alguns bugs de paginação
 npm i --save mongoose-paginate@5.0.3
 npm i --save express-query-int@1.0.1
 
 
+modulo do node, que vai simplificar a implementação dos webServices, ele integra o express com o mongoose
+npm i --save node-restful@0.2.5
+
+
+launcher dispara a aplicação, de uma forma mais profissa
+npm i --save pm2@2.1.5
 
 
 1.2- instalar as dependencias quando se utiliza em desenvolvimento
+Startar a aplicação durante o desenvolvimento
+npm i --save-dev nodemon@1.11.0
