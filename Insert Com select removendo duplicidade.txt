@@ -1,0 +1,68 @@
+--Carga dos tokens desbloqueados
+;WITH dispositivosDesbloqueados (
+			CPF
+			,ProvedorId
+			,DispositivoId
+			,Descricao
+			,Codigo
+			,DataInclusao
+			,DataAlteracao
+			,DataDesbloqueio
+			,Bloqueado
+			,Status
+) as  
+(select 
+			 UE.CPF
+			,UECD.ProvedorId
+			,UECD.DispositivoId
+			,UECD.Descricao
+			,UECD.Codigo
+			,MIN (UECD.DataInclusao)
+			,MAX(UECD.DataAlteracao)
+			,MIN (UECD.DataDesbloqueio)
+			,UECD.Bloqueado
+			,UECD.Status
+			
+from UsuarioExternoContaCorrenteDispositivo AS UECD
+INNER JOIN UsuarioExternoContaCorrente as UECC ON UECD.UsuarioExternoContaCorrenteId = UECC.UsuarioExternoContaCorrenteId
+INNER JOIN UsuarioExternoConfiguracao as UECONF ON UECC.UsuarioExternoConfiguracaoId = UECONF.UsuarioExternoConfiguracaoId
+INNER JOIN UsuarioExterno as UE ON UECONF.UsuarioExternoId = UE.UsuarioExternoId
+where UECD.Bloqueado = 0 and UECD.Status= 1
+group by 
+			 UE.CPF
+			,UECD.ProvedorId
+			,UECD.DispositivoId
+			,UECD.Descricao
+			,UECD.Codigo
+			,Bloqueado
+			,UECD.Status) 
+--Carga dos tokens desbloqueados
+INSERT INTO [dbo].[UsuarioDispositivo]
+           ([CPF]
+           ,[ProvedorId]
+           ,[DispositivoId]
+           ,[Descricao]
+           ,[Codigo]
+           ,[DataInclusao]
+           ,[DataAlteracao]
+           ,[DataDesbloqueio]
+           ,[Bloqueado]
+           ,[Status]
+           ,[StatusEnvioEmailSms]
+           ,[ChaveAcessoSms]
+           ,[ChaveAcessoEmail])
+SELECT 
+			 CPF
+			,ProvedorId
+			,DispositivoId
+			,Descricao
+			,Codigo
+			,DataInclusao
+			,DataAlteracao
+			,DataDesbloqueio
+			,Bloqueado
+			,Status
+			,2  AS [StatusEnvioEmailSms] --Validado
+			,null AS [ChaveAcessoSms]
+			,null AS [ChaveAcessoEmail]
+ FROM dispositivosDesbloqueados

@@ -223,3 +223,59 @@ lib axios, para trabalhar com requisições HTTP
         axios.get(`${URL}?sort=-createdAt`)
             .then((resp)=> this.setState({...this.state, description:'', list: resp.data}))
     }
+=========================
+(Redux-Multi) = Midleware utilizada para a partir de um unico actionCreator, seja disparado mais de uma Action
+Aula 81
+
+Exemplo de uso, após um POST de um formulario, ele atualiza a listagem
+npm i --save-dev redux-multi@0.1.12
+
+import multi from 'redux-multi'
+const store = applyMiddleware(multi,promise)(createStore)(reducers,devTools)
+
+porém ele é sincrono, ele não espera qualquer tipo de promisse se concluir
+export const search = () =>{
+    const request = axios.get(`${URL}?sort=-createdAt`)
+    return{
+        type:'TODO_SEARCH',
+        payload:request
+    }
+}
+
+//Nesse exemplo, ao adicionar um item ja pode se chamar o metodo Search
+//Porém ele nao ira esperar o retorno do .then da requisição 
+export const add =(description) =>{
+    const request = axios.post(URL,{ description })
+    return [
+        {type:'TODO_ADDED',payload:request},
+        search()
+    ]
+}
+-----
+//Essa lib, faz com que a chamada para outras actions respeite a promisse
+npm i --save-dev redux-thunk@2.2.0
+
+
+//Entao o padrão de montagem é:
+npm i --save-dev redux-multi@0.1.12 //Para que uma action possa retornar um array de actions
+npm i --save-dev redux-thunk@2.2.0// Para que antes de chamar outra action, ele possa esperar o encerramento de uma promisse
+
+export const search = () =>{
+    const request = axios.get(`${URL}?sort=-createdAt`)
+    return{
+        type:'TODO_SEARCH',
+        payload:request
+    }
+}
+
+
+//A lib redux-thunk, faz a actionCreator retornar um método, que recebe como parametro um dispatch
+//Dessa froma, foram duas lib, multi(redux-multi) e promisse(redux-promisse)
+export const addComThunk =(description) =>{
+    return dispatch =>{
+        axios.post(URL,{ description })
+            .then(resp => dispatch({type:'TODO_ADDED', payload : resp.data }))
+            .then(resp => dispatch(search()))
+    }
+}
+===========================
